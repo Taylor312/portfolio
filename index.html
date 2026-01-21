@@ -3,15 +3,624 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Portfolio</title>
+    <title>Taylor Anthony | Engineering Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        /* --- THEME VARS --- */
+        :root {
+            --bg-body: #0d1117; 
+            --bg-nav: #000000; 
+            --bg-panel: #161b22;
+            --text-main: #e6e6e6;
+            --text-muted: #8b949e;
+            --accent: #f12035; 
+            --border: #30363d;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-body);
+            background-image: radial-gradient(#30363d 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding-top: 100px;
+        }
+
+        /* --- UTILITIES --- */
+        .container { 
+            max-width: 1600px; 
+            margin: 0 auto; 
+            padding: 0 4rem; 
+        }
+        @media (max-width: 1000px) { .container { padding: 0 2rem; } }
+
+        h1, h2, h3, h4 { font-family: 'Rajdhani', sans-serif; text-transform: uppercase; color: #fff; line-height: 1; }
+        
+        p { color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        
+        a { color: #fff; text-decoration: none; transition: 0.2s; }
+        a:hover { color: var(--accent); }
+
+        /* --- TOP NAVIGATION --- */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: 90px; 
+            background: var(--bg-nav);
+            border-bottom: 1px solid rgba(255, 62, 62, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: height 0.3s ease;
+        }
+        
+        .navbar.scrolled { height: 60px; }
+
+        .nav-inner {
+            width: 100%; max-width: 1600px; padding: 0 4rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .logo { 
+            font-family: 'Rajdhani'; 
+            font-weight: 700; 
+            font-size: 1.5rem; 
+            letter-spacing: 1px; 
+            color: var(--accent); 
+        }
+
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-link { 
+            font-family: 'JetBrains Mono'; font-size: 0.8rem; letter-spacing: 1px; 
+            position: relative; white-space: nowrap;
+        }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px;
+            background: var(--accent); transition: 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        /* --- SECTIONS --- */
+        section { margin-bottom: 8rem; scroll-margin-top: 120px; }
+        
+        .section-header {
+            display: flex; align-items: baseline; gap: 1rem;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        .section-num { font-family: 'JetBrains Mono'; color: var(--accent); font-size: 1.2rem; }
+        .section-title { font-size: 2.5rem; }
+
+        /* --- HERO STYLES --- */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+
+        .hero-box {
+            background: rgba(22, 27, 34, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 3rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            object-fit: cover;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            opacity: 0.8;
+        }
+
+        /* --- LAYOUT GRIDS --- */
+        .split-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: start; }
+        .split-grid-reverse { display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; align-items: start; }
+        
+        @media (max-width: 1000px) { 
+            .split-grid, .split-grid-reverse { grid-template-columns: 1fr; } 
+        }
+
+        /* --- FILMSTRIP CAROUSEL --- */
+        .filmstrip-wrapper {
+            background: #050505;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            height: fit-content;
+        }
+        
+        .main-view {
+            width: 100%; height: 400px;
+            display: flex; align-items: center; justify-content: center;
+            background: #000;
+            position: relative;
+        }
+        .main-view img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .caption-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            background: rgba(0,0,0,0.85); color: var(--accent);
+            font-family: 'JetBrains Mono'; font-size: 0.85rem;
+            padding: 8px 16px; border-top: 1px solid var(--border);
+        }
+
+        .strip {
+            display: flex; gap: 8px; padding: 10px;
+            background: #0d1117; overflow-x: auto;
+            border-top: 1px solid var(--border);
+        }
+        .thumb {
+            height: 60px; width: 90px;
+            object-fit: cover; border-radius: 6px;
+            opacity: 0.5; transition: 0.2s; cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .thumb:hover, .thumb.active { opacity: 1; border-color: var(--accent); }
+
+        /* --- AUDIO SECTION --- */
+        .audio-container {
+            max-width: 900px; margin: 0 auto; text-align: center;
+        }
+        
+        .audio-row {
+            display: flex; align-items: center; gap: 1.5rem;
+            background: var(--bg-panel); padding: 1.5rem; 
+            border-radius: var(--radius); border: 1px solid var(--border);
+            margin-bottom: 1rem; transition: 0.2s; text-align: left;
+        }
+        .audio-row:hover {
+            background: #1f252e; 
+            border-color: var(--accent);
+        }
+        
+        .album-art {
+            width: 70px; height: 70px; background: #222; border-radius: 6px;
+            overflow: hidden; flex-shrink: 0;
+        }
+        .album-art img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .audio-info { flex-grow: 1; }
+        .track-name { 
+            font-family: 'JetBrains Mono'; font-size: 1rem; color: var(--accent);
+            margin-bottom: 0.5rem; display: block; font-weight: bold;
+        }
+        audio { width: 100%; height: 30px; filter: invert(1) contrast(0.8); }
+
+        .btn-group {
+            display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;
+        }
+
+        .social-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            color: #fff; padding: 10px 20px;
+            border-radius: var(--radius); font-family: 'JetBrains Mono'; font-size: 0.8rem;
+            transition: 0.2s; width: fit-content; text-decoration: none;
+        }
+        
+        .twitch-btn { background: #6441a5; }
+        .twitch-btn:hover { background: #7d5bbe; transform: translateY(-2px); }
+
+        /* --- VISUALS --- */
+        .visuals-container {
+            display: block; 
+        }
+        
+        .visual-col h3 { 
+            border-bottom: 1px solid var(--accent); padding-bottom: 0.5rem; margin-bottom: 1rem;
+            display: inline-block;
+        }
+        
+        .visual-desc {
+            font-size: 0.9rem; margin-bottom: 2rem; border-left: 2px solid #333; padding-left: 1rem;
+            max-width: 800px;
+        }
+
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;
+        }
+        .gallery-item {
+            aspect-ratio: 16/9; 
+            background: #111; 
+            border-radius: 8px; 
+            overflow: hidden;
+            cursor: pointer; 
+            position: relative; 
+            border: 1px solid var(--border); 
+            transform: translateZ(0); 
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.3s; }
+        .gallery-item:hover { border-color: var(--accent); }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* --- LIGHTBOX --- */
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 2000;
+            display: none; justify-content: center; align-items: center; flex-direction: column;
+        }
+        #lightbox img { max-width: 90%; max-height: 80vh; border-radius: var(--radius); border: 1px solid var(--border); }
+        #lightbox-caption { margin-top: 1rem; font-family: 'JetBrains Mono'; color: var(--accent); font-size: 1.2rem; }
+        #lightbox-close { 
+            position: absolute; top: 20px; right: 30px; 
+            font-size: 3rem; color: #fff; cursor: pointer; 
+        }
+
+        /* --- TAGS & VIDEO BOX --- */
+        .tag {
+            display: inline-block; padding: 4px 10px; 
+            border: 1px solid var(--accent); color: var(--accent);
+            font-family: 'JetBrains Mono'; font-size: 0.7rem; border-radius: 4px;
+            margin-bottom: 1rem; background: rgba(255, 62, 62, 0.05);
+        }
+
+        .video-box {
+            position: relative; padding-bottom: 56.25%; height: 0;
+            background: #000; border-radius: var(--radius); overflow: hidden;
+            border: 1px solid var(--border); 
+        }
+        .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        .video-caption {
+            font-family: 'JetBrains Mono'; font-size: 0.8rem; 
+            color: var(--accent); 
+            margin-top: 0.5rem; text-align: right; letter-spacing: 1px;
+        }
+        
+        .media-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;
+        }
+        @media (max-width: 900px) { .media-grid { grid-template-columns: 1fr; } }
+
     </style>
 </head>
 <body>
-    <h1>Portfolio Online</h1>
-    <p>Site is successfully deployed.</p>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <div class="logo">TAYLOR ANTHONY</div>
+            <div class="nav-links">
+                <a href="#lab" class="nav-link">LAB</a>
+                <a href="#ftc" class="nav-link">FTC</a>
+                <a href="#orbitron" class="nav-link">ORBITRON</a>
+                <a href="#dyno" class="nav-link">DYNO</a>
+                <a href="#audio" class="nav-link">AUDIO</a>
+                <a href="#visuals" class="nav-link">VISUALS</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="hero-grid">
+            <div class="hero-box">
+                <h1 style="font-size: 4rem; margin-bottom: 1rem;">
+                    MAKER. <span style="color:var(--accent)">ENGINEER.</span> 
+                    <span style="color:var(--accent); font-style: italic;">ARTIST.</span>
+                </h1>
+                <p style="font-size: 1.2rem; color: #e6e6e6; margin-bottom: 0;">
+                    I love designing and optimizing robots to be at their highest performance potential. My work focuses on control theory, manufacturing, and rapid iterative prototyping while thriving within engineering teams. And when I'm not building new ideas, I'm imagining new worlds through music production, photography, and 3D rendering. This is my portfolio.
+                </p>
+            </div>
+            <img src="./assets/hero1.jpg" class="hero-img" alt="Hero Image">
+        </div>
+
+        <section id="lab">
+            <div class="section-header">
+                <span class="section-num">01 //</span>
+                <h2 class="section-title">WHERE I WORK</h2>
+            </div>
+            
+            <div class="split-grid">
+                <div>
+                    <h3>The Home Lab</h3>
+                    <div class="tag">ESTABLISHED 2022</div>
+                    <p>
+                        This is where the chaos happens. Over the last few years, I’ve transformed my bedroom (and other parts of my house) into a fully functional prototyping facility. It’s a tight squeeze, but I’ve managed to integrate custom-built workbenches and storage for all of my tools alongside a suite of machines including multiple 3D printers, metalworking equipment, soldering stations and oscilloscopes for electronics, and a custom AI computer for running local ML models.
+                    </p>
+                    <p>
+                        To support my creative endeavors, my computer workstation also doubles as a music production studio with professional monitors and a MIDI keyboard. With some rearranging, my room has even served as a professional photo studio. Every project you see here, whether it’s a high-torque actuator or a new drum and bass track, was born in this room. It is the physical manifestation of my design process.
+                    </p>
+                </div>
+
+                <div class="filmstrip-wrapper">
+                    <div class="main-view">
+                        <img id="lab-main" src="./assets/lab1.jpg" alt="Lab View">
+                        <div id="lab-caption" class="caption-overlay">Main workbench</div>
+                    </div>
+                    <div class="strip">
+                        <img class="thumb active" src="./assets/lab1.jpg" data-caption="Main workbench" onclick="updateGallery('lab', this)">
+                        <img class="thumb" src="./assets/lab2.jpg" data-caption="Working on FTC robot" onclick="updateGallery('lab', this)">
+                        <img class="thumb" src="./assets/lab3.jpg" data-caption="View of reading area and music production zone" onclick="updateGallery('lab', this)">
+                        <img class="thumb" src="./assets/lab4.jpg" data-caption="Initial construction" onclick="updateGallery('lab', this)">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ftc">
+            <div class="section-header">
+                <span class="section-num">02 //</span>
+                <h2 class="section-title">SWERVE DRIVES & FTC #19823</h2>
+            </div>
+
+            <div class="split-grid-reverse" style="margin-bottom: 6rem; border-bottom: 1px dashed #333; padding-bottom: 4rem;">
+                <div class="filmstrip-wrapper">
+                    <div class="main-view">
+                        <img id="ftc-team-main" src="./assets/ftc1.jpg" alt="Team Photo">
+                        <div id="ftc-team-caption" class="caption-overlay">Connor (left) Me (right) At 3d printing booth</div>
+                    </div>
+                    <div class="strip">
+                        <img class="thumb active" src="./assets/ftc1.jpg" data-caption="Connor (left) Me (right) At 3d printing booth" onclick="updateGallery('ftc-team', this)">
+                        <img class="thumb" src="./assets/ftc2.jpg" data-caption="Working on FTC code integration" onclick="updateGallery('ftc-team', this)">
+                        <img class="thumb" src="./assets/ftc3.jpg" data-caption="Think award at state qualifier" onclick="updateGallery('ftc-team', this)">
+                    </div>
+                </div>
+                <div>
+                    <h3>Chapter 1: The Journey</h3>
+                    <div class="tag">FTC TEAM 19823</div>
+                    <p>
+                        Co-founding FTC Team #19823 "Jolly Blue" with my friend Connor Sherwin, we set out to challenge the conventional wisdom of the competition. We weren't interested in safe, meta-compliant designs. We wanted to build the most innovative, technically advanced machines possible, regardless of the risk.
+                    </p>
+                    <p>
+                        The defining challenge was our size: we were a two-person team. While other teams had a dozen members to distribute the workload, we had to be efficient. For four years, we dedicated ourselves to the joy of learning through building high-complexity mechanisms. Our love for building new ideas, and the countless things we learned along the way, was worth the sleepless nights required to keep up with the larger teams.
+                    </p>
+                </div>
+            </div>
+
+            <div class="split-grid" style="margin-bottom: 6rem; border-bottom: 1px dashed #333; padding-bottom: 4rem;">
+                <div>
+                    <h3>Chapter 2: Swerve R&D</h3>
+                    <div class="tag">ITERATION HISTORY</div>
+                    <p>
+                        Our philosophy led us to a specific mechanism: the swerve drive. In our rookie year (2021), despite having no mentors and scarce documentation, we attempted to build one. It took seven months, and ultimately, we failed. We lost our state qualifier and didn't advance. But the failure was invaluable: Connor mastered PID loops and loop time optimization, while I learned the hard realities of bevel gear tolerances and CAM paths.
+                    </p>
+                    <p>
+                        The next year, rather than retreating, we doubled down. We designed an even more ambitious drivetrain: a 3-module differential swerve drive. With the goal of 3D printing the entire assembly, I went through hundreds of prototypes to refine the geometry. All of that iterative optimization culminated in a drive system that was faster and more robust than our previous attempts, but still with room for improvement.
+                    </p>
+                </div>
+                <div class="filmstrip-wrapper">
+                    <div class="main-view">
+                        <img id="ftc-dev-main" src="./assets/ftc4.jpg" alt="Prototypes">
+                        <div id="ftc-dev-caption" class="caption-overlay">Old V1 vs Old V2 Comparison</div>
+                    </div>
+                    <div class="strip">
+                        <img class="thumb active" src="./assets/ftc4.jpg" data-caption="Old V1 vs Old V2 Comparison" onclick="updateGallery('ftc-dev', this)">
+                        <img class="thumb" src="./assets/ftc5.jpg" data-caption="Old V2 exploded view" onclick="updateGallery('ftc-dev', this)">
+                        <img class="thumb" src="./assets/ftc6.jpg" data-caption="Old V2 Failed Prototype Bin" onclick="updateGallery('ftc-dev', this)">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3>Chapter 3: Final Architecture</h3>
+                <div class="tag">COMPLETED // 2025</div>
+                <p style="max-width: 800px;">
+                    The final differential swerve module achieves a significant weight reduction while maintaining full structural rigidity. This research paper details the prototypes and design choices that influenced the final prototype.
+                </p>
+                
+                <a href="./assets/swerve_paper.pdf" download class="tag" style="text-decoration:none; display:inline-block; font-size: 0.9rem; padding: 8px 16px;">
+                    ↓ DOWNLOAD TECHNICAL PAPER (PDF)
+                </a>
+
+                <div class="media-grid">
+                    <div class="filmstrip-wrapper">
+                        <div class="main-view">
+                            <img id="ftc-final-main" src="./assets/ftc7.jpg" alt="Final Swerve">
+                            <div id="ftc-final-caption" class="caption-overlay">Final design exploded view</div>
+                        </div>
+                        <div class="strip">
+                            <img class="thumb active" src="./assets/ftc7.jpg" data-caption="Final design exploded view" onclick="updateGallery('ftc-final', this)">
+                            <img class="thumb" src="./assets/ftc8.jpg" data-caption="2 Module integration" onclick="updateGallery('ftc-final', this)">
+                            <img class="thumb" src="./assets/ftc9.jpg" data-caption="Final design" onclick="updateGallery('ftc-final', this)">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="video-box">
+                            <iframe src="https://www.youtube.com/embed/zLRMBZT2rsU?si=vQtHGi-GYU2vNDTs" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-caption">VIDEO: Field-Centric Drive Demo</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="orbitron">
+            <div class="section-header">
+                <span class="section-num">03 //</span>
+                <h2 class="section-title">BATTLEBOTS: ORBITRON</h2>
+            </div>
+            
+            <div class="split-grid">
+                <div>
+                    <h3>Orbitron</h3>
+                    <div class="tag">DESIGN CONSULTANT</div>
+                    <p>
+                        In my freshman year, I jumped from educational robotics to the big leagues, joining the professional BattleBots team Orbitron. I contributed directly to the mechanical design of the V1 chassis and the weapon powertrain, and continue to be a design consultant to the team.
+                    </p>
+                    <p>
+                        Specific engineering challenges included weight optimization, thermal management for high-power BLDC motors and ESCs, and working with AR500 ballistic steel to create effective counter-weapon geometries.
+                    </p>
+                </div>
+                <div>
+                    <div class="video-box">
+                        <iframe src="https://www.youtube.com/embed/jj02HjxhIgU?si=nqqOsrMyZX1yNZ9K" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-caption">VIDEO: My Story Joining BattleBots Team Orbitron</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dyno">
+            <div class="section-header">
+                <span class="section-num">04 //</span>
+                <h2 class="section-title">ACTUATOR DYNAMOMETER</h2>
+            </div>
+
+            <div class="split-grid">
+                <div>
+                    <h3>Research Study</h3>
+                    <div class="tag">INDEPENDENT STUDY, ONGOING</div>
+                    <p>
+                        While conducting independent research on novel actuators for humanoid robots, I realized I needed a way to validate my control theory. I developed a custom dynamometer test bench to characterize torque-speed curves, thermal performance, and control loop efficiency for any future actuator designs.
+                    </p>
+                    <p>
+                        Current progress includes the creation of the industrial electrical control system, which integrates a Teensy microcontroller and a 1000-watt industrial AC servo motor housed in a NEMA-rated control box. To join the chassis together, I CNC-machined custom motor and gearbox brackets on my 6040 mill. The video below documents the design and build journey so far.
+                    </p>
+                </div>
+                <div>
+                    <div class="video-box">
+                        <iframe src="https://www.youtube.com/embed/2t5nEAW3VI8?si=NcwmHnAS_GvyCB1v" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-caption">VIDEO: Dyno test bench build and design process</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="audio">
+            <div class="section-header">
+                <span class="section-num">05 //</span>
+                <h2 class="section-title">AUDIO WORKS</h2>
+            </div>
+            
+            <div class="audio-container">
+                <div style="margin-bottom: 4rem;">
+                    <h3 style="margin-bottom: 0.5rem;">MUSIC PRODUCTION</h3>
+                    <p style="margin-bottom: 2rem;">
+                        I have been producing music for six years, starting in FL Studio and falling in love with the technical side of EDM. While I produce multiple genres, making drum and bass is my favorite. I treat audio with the same precision of my engineering projects, and I obsess over mix quality and sound design with the goal of creating the cleanest sonic profile possible. It is the ultimate outlet for my creativity. So you can get a idea of what I make, here are 2 tracks im proud of and am still iterating on.
+                    </p>
+                    
+                    <div class="audio-row">
+                        <div class="album-art">
+                            <img src="./assets/cover1.jpg" alt="art" onerror="this.src='./assets/lab1.jpg'"> 
+                        </div>
+                        <div class="audio-info">
+                            <span class="track-name">Sanctuary</span>
+                            <audio controls><source src="./assets/track1.mp3" type="audio/mpeg"></audio>
+                        </div>
+                    </div>
+
+                    <div class="audio-row">
+                        <div class="album-art">
+                             <img src="./assets/cover2.jpg" alt="art" onerror="this.src='./assets/lab1.jpg'">
+                        </div>
+                        <div class="audio-info">
+                            <span class="track-name">The Depths</span>
+                            <audio controls><source src="./assets/track2.mp3" type="audio/mpeg"></audio>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 1rem;">LIVE BATTLES</h3>
+                    <p>
+                        Beyond solo production, I compete in "Bish Battles," hosted by producer/streamer Bishu. Competitors have just two hours to create a completely original track in unpredictable BPMs and genres. I compete under the alias "Gradient." You can catch my submissions in his streams and videos!
+                    </p>
+                    <div class="btn-group">
+                        <a href="https://www.twitch.tv/welcome2bishu" target="_blank" class="social-btn twitch-btn">
+                            <span>👾</span> Watch on Twitch
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="visuals">
+            <div class="section-header">
+                <span class="section-num">06 //</span>
+                <h2 class="section-title">VISUAL WORKS</h2>
+            </div>
+
+            <div class="visuals-container">
+                <div class="visual-col">
+                    <h3>MECHANICAL DESIGN 3D RENDERS</h3>
+                    <div class="visual-desc">
+                        <p>
+                            I can't separate my love for aesthetics from engineering. Along with designing functional robots, I strive to visualize the final product in the best light possible. This collection includes high-fidelity renders I've made of my own and others' designs, featuring the official promotional renders for the Orbitron BattleBot.
+                        </p>
+                    </div>
+                    <div class="gallery-grid">
+                        <div class="gallery-item" onclick="openLightbox(this, 'My FTC 2024 Robot')"><img src="./assets/render1.jpg"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'My FTC 2024 Robot')"><img src="./assets/render2.jpg"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'My Loonysquad Cad Comp robot')"><img src="./assets/render3.jpg"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'My Loonysquad Cad Comp robot')"><img src="./assets/render4.jpg"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'Orbitron robot render')"><img src="./assets/render5.jpg"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'Orbitron robot render')"><img src="./assets/render6.jpg"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'My FTC 2025 robot')"><img src="./assets/render7.jpg"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'Old Swerve drive V2 render')"><img src="./assets/render8.jpg"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="lightbox" onclick="if(event.target === this) closeLightbox()">
+        <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <script>
+        // --- NAVBAR SHRINK ---
+        window.onscroll = function() {
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                document.getElementById("navbar").classList.add("scrolled");
+            } else {
+                document.getElementById("navbar").classList.remove("scrolled");
+            }
+        };
+
+        // --- UNIVERSAL GALLERY LOGIC ---
+        function updateGallery(galleryId, thumb) {
+            const mainImg = document.getElementById(galleryId + '-main');
+            const captionBox = document.getElementById(galleryId + '-caption');
+            
+            mainImg.src = thumb.src;
+            if(thumb.dataset.caption) {
+                captionBox.innerText = thumb.dataset.caption;
+            }
+
+            const allThumbs = thumb.parentElement.querySelectorAll('.thumb');
+            allThumbs.forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+        }
+
+        // --- LIGHTBOX LOGIC ---
+        function openLightbox(element, caption) {
+            const img = element.querySelector('img');
+            const lightbox = document.getElementById('lightbox');
+            const boxImg = document.getElementById('lightbox-img');
+            const boxCap = document.getElementById('lightbox-caption');
+
+            boxImg.src = img.src;
+            boxCap.innerText = caption || "Gallery Image";
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
-
