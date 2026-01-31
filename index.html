@@ -155,7 +155,13 @@
             background: #000;
             position: relative;
         }
-        .main-view img { width: 100%; height: 100%; object-fit: contain; }
+        
+        /* UPDATED: Changed from cover to contain to prevent cropping */
+        .main-view img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+        }
         
         .caption-overlay {
             position: absolute; bottom: 0; left: 0; width: 100%;
@@ -205,20 +211,6 @@
             margin-bottom: 0.5rem; display: block; font-weight: bold;
         }
         audio { width: 100%; height: 30px; filter: invert(1) contrast(0.8); }
-
-        .btn-group {
-            display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;
-        }
-
-        .social-btn {
-            display: inline-flex; align-items: center; gap: 10px;
-            color: #fff; padding: 10px 20px;
-            border-radius: var(--radius); font-family: 'JetBrains Mono'; font-size: 0.8rem;
-            transition: 0.2s; width: fit-content; text-decoration: none;
-        }
-        
-        .twitch-btn { background: #6441a5; }
-        .twitch-btn:hover { background: #7d5bbe; transform: translateY(-2px); }
 
         /* --- VISUALS --- */
         .visuals-container {
@@ -300,11 +292,11 @@
             <div class="logo">TAYLOR ANTHONY</div>
             <div class="nav-links">
                 <a href="#lab" class="nav-link">LAB</a>
-                <a href="#ftc" class="nav-link">FTC</a>
-                <a href="#orbitron" class="nav-link">ORBITRON</a>
                 <a href="#dyno" class="nav-link">DYNO</a>
-                <a href="#audio" class="nav-link">AUDIO</a>
+                <a href="#orbitron" class="nav-link">ORBITRON</a>
+                <a href="#ftc" class="nav-link">FTC</a>
                 <a href="#visuals" class="nav-link">VISUALS</a>
+                <a href="#audio" class="nav-link">AUDIO</a>
             </div>
         </div>
     </nav>
@@ -318,10 +310,10 @@
                     <span style="color:var(--accent); font-style: italic;">ARTIST.</span>
                 </h1>
                 <p style="font-size: 1.2rem; color: #e6e6e6; margin-bottom: 0;">
-                    I love designing and optimizing robots to be at their highest performance potential. My work focuses on control theory, manufacturing, and rapid iterative prototyping while thriving within engineering teams. And when I'm not building new ideas, I'm imagining new worlds through music production, photography, and 3D rendering. This is my portfolio.
+                    I love designing and optimizing robots to be at their highest performance potential. My work focuses on control theory, manufacturing, and rapid iterative prototyping while working closely with my competition teams. And when I'm not building new ideas, I'm imagining new worlds through music production and 3D rendering. This is my portfolio.
                 </p>
             </div>
-            <img src="./assets/hero1.jpg" class="hero-img" alt="Hero Image">
+            <img src="./assets/hero1.jpg" class="hero-img" alt="Hero Image" fetchpriority="high" loading="eager">
         </div>
 
         <section id="lab">
@@ -344,35 +336,87 @@
 
                 <div class="filmstrip-wrapper">
                     <div class="main-view">
-                        <img id="lab-main" src="./assets/lab1.jpg" alt="Lab View">
+                        <img id="lab-main" src="./assets/lab1.jpg" alt="Lab View" loading="lazy" decoding="async">
                         <div id="lab-caption" class="caption-overlay">Main workbench</div>
                     </div>
                     <div class="strip">
-                        <img class="thumb active" src="./assets/lab1.jpg" data-caption="Main workbench" onclick="updateGallery('lab', this)">
-                        <img class="thumb" src="./assets/lab2.jpg" data-caption="Working on FTC robot" onclick="updateGallery('lab', this)">
-                        <img class="thumb" src="./assets/lab3.jpg" data-caption="View of reading area and music production zone" onclick="updateGallery('lab', this)">
-                        <img class="thumb" src="./assets/lab4.jpg" data-caption="Initial construction" onclick="updateGallery('lab', this)">
+                        <img class="thumb active" src="./assets/lab1.jpg" data-caption="Main workbench" onclick="updateGallery('lab', this)" loading="lazy" decoding="async">
+                        <img class="thumb" src="./assets/lab2.jpg" data-caption="Working on FTC robot" onclick="updateGallery('lab', this)" loading="lazy" decoding="async">
+                        <img class="thumb" src="./assets/lab3.jpg" data-caption="View of reading area and music production zone" onclick="updateGallery('lab', this)" loading="lazy" decoding="async">
+                        <img class="thumb" src="./assets/lab4.jpg" data-caption="Initial construction" onclick="updateGallery('lab', this)" loading="lazy" decoding="async">
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dyno">
+            <div class="section-header">
+                <span class="section-num">02 //</span>
+                <h2 class="section-title">ACTUATOR DYNAMOMETER</h2>
+            </div>
+
+            <div class="split-grid">
+                <div>
+                    <h3>Research Study</h3>
+                    <div class="tag">INDEPENDENT STUDY, ONGOING</div>
+                    <p>
+                        While conducting independent research on novel actuators for humanoid robots, I realized I needed a way to validate my control theory. I developed a custom dynamometer test bench to characterize torque-speed curves, thermal performance, and control loop efficiency for any future actuator designs.
+                    </p>
+                    <p>
+                        Current progress includes the creation of the industrial electrical control system, which integrates a Teensy microcontroller and a 1000-watt industrial AC servo motor housed in a NEMA-rated control box. To join the chassis together, I CNC-machined custom motor and gearbox brackets on my 6040 mill. The video below documents the design and build journey so far.
+                    </p>
+                </div>
+                <div>
+                    <div class="video-box">
+                        <iframe src="https://www.youtube.com/embed/2t5nEAW3VI8?si=NcwmHnAS_GvyCB1v" frameborder="0" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="video-caption">VIDEO: Dyno test bench build and design process</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="orbitron">
+            <div class="section-header">
+                <span class="section-num">03 //</span>
+                <h2 class="section-title">BATTLEBOTS: ORBITRON</h2>
+            </div>
+            
+            <div class="split-grid">
+                <div>
+                    <h3>Orbitron</h3>
+                    <div class="tag">DESIGN CONSULTANT</div>
+                    <p>
+                        In my freshman year, I jumped from educational robotics to the big leagues, joining the professional BattleBots team Orbitron. I contributed directly to the mechanical design of the V1 chassis and the weapon powertrain, and continue to be a design consultant to the team.
+                    </p>
+                    <p>
+                        Specific engineering challenges included weight optimization, thermal management for high-power BLDC motors and ESCs, and working with AR500 ballistic steel to create effective counter-weapon geometries.
+                    </p>
+                </div>
+                <div>
+                    <div class="video-box">
+                        <iframe src="https://www.youtube.com/embed/jj02HjxhIgU?si=nqqOsrMyZX1yNZ9K" frameborder="0" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="video-caption">VIDEO: My Story Joining BattleBots Team Orbitron</div>
                 </div>
             </div>
         </section>
 
         <section id="ftc">
             <div class="section-header">
-                <span class="section-num">02 //</span>
+                <span class="section-num">04 //</span>
                 <h2 class="section-title">SWERVE DRIVES & FTC #19823</h2>
             </div>
 
             <div class="split-grid-reverse" style="margin-bottom: 6rem; border-bottom: 1px dashed #333; padding-bottom: 4rem;">
                 <div class="filmstrip-wrapper">
                     <div class="main-view">
-                        <img id="ftc-team-main" src="./assets/ftc1.jpg" alt="Team Photo">
+                        <img id="ftc-team-main" src="./assets/ftc1.jpg" alt="Team Photo" loading="lazy" decoding="async">
                         <div id="ftc-team-caption" class="caption-overlay">Connor (left) Me (right) At 3d printing booth</div>
                     </div>
                     <div class="strip">
-                        <img class="thumb active" src="./assets/ftc1.jpg" data-caption="Connor (left) Me (right) At 3d printing booth" onclick="updateGallery('ftc-team', this)">
-                        <img class="thumb" src="./assets/ftc2.jpg" data-caption="Working on FTC code integration" onclick="updateGallery('ftc-team', this)">
-                        <img class="thumb" src="./assets/ftc3.jpg" data-caption="Think award at state qualifier" onclick="updateGallery('ftc-team', this)">
+                        <img class="thumb active" src="./assets/ftc1.jpg" data-caption="Connor (left) Me (right) At 3d printing booth" onclick="updateGallery('ftc-team', this)" loading="lazy" decoding="async">
+                        <img class="thumb" src="./assets/ftc2.jpg" data-caption="Working on FTC code integration" onclick="updateGallery('ftc-team', this)" loading="lazy" decoding="async">
+                        <img class="thumb" src="./assets/ftc3.jpg" data-caption="Think award at state qualifier" onclick="updateGallery('ftc-team', this)" loading="lazy" decoding="async">
                     </div>
                 </div>
                 <div>
@@ -400,13 +444,13 @@
                 </div>
                 <div class="filmstrip-wrapper">
                     <div class="main-view">
-                        <img id="ftc-dev-main" src="./assets/ftc4.jpg" alt="Prototypes">
+                        <img id="ftc-dev-main" src="./assets/ftc4.jpg" alt="Prototypes" loading="lazy" decoding="async">
                         <div id="ftc-dev-caption" class="caption-overlay">Old V1 vs Old V2 Comparison</div>
                     </div>
                     <div class="strip">
-                        <img class="thumb active" src="./assets/ftc4.jpg" data-caption="Old V1 vs Old V2 Comparison" onclick="updateGallery('ftc-dev', this)">
-                        <img class="thumb" src="./assets/ftc5.jpg" data-caption="Old V2 exploded view" onclick="updateGallery('ftc-dev', this)">
-                        <img class="thumb" src="./assets/ftc6.jpg" data-caption="Old V2 Failed Prototype Bin" onclick="updateGallery('ftc-dev', this)">
+                        <img class="thumb active" src="./assets/ftc4.jpg" data-caption="Old V1 vs Old V2 Comparison" onclick="updateGallery('ftc-dev', this)" loading="lazy" decoding="async">
+                        <img class="thumb" src="./assets/ftc5.jpg" data-caption="Old V2 exploded view" onclick="updateGallery('ftc-dev', this)" loading="lazy" decoding="async">
+                        <img class="thumb" src="./assets/ftc6.jpg" data-caption="Old V2 Failed Prototype Bin" onclick="updateGallery('ftc-dev', this)" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -425,19 +469,19 @@
                 <div class="media-grid">
                     <div class="filmstrip-wrapper">
                         <div class="main-view">
-                            <img id="ftc-final-main" src="./assets/ftc7.jpg" alt="Final Swerve">
+                            <img id="ftc-final-main" src="./assets/ftc7.jpg" alt="Final Swerve" loading="lazy" decoding="async">
                             <div id="ftc-final-caption" class="caption-overlay">Final design exploded view</div>
                         </div>
                         <div class="strip">
-                            <img class="thumb active" src="./assets/ftc7.jpg" data-caption="Final design exploded view" onclick="updateGallery('ftc-final', this)">
-                            <img class="thumb" src="./assets/ftc8.jpg" data-caption="2 Module integration" onclick="updateGallery('ftc-final', this)">
-                            <img class="thumb" src="./assets/ftc9.jpg" data-caption="Final design" onclick="updateGallery('ftc-final', this)">
+                            <img class="thumb active" src="./assets/ftc7.jpg" data-caption="Final design exploded view" onclick="updateGallery('ftc-final', this)" loading="lazy" decoding="async">
+                            <img class="thumb" src="./assets/ftc8.jpg" data-caption="2 Module integration" onclick="updateGallery('ftc-final', this)" loading="lazy" decoding="async">
+                            <img class="thumb" src="./assets/ftc9.jpg" data-caption="Final design" onclick="updateGallery('ftc-final', this)" loading="lazy" decoding="async">
                         </div>
                     </div>
                     
                     <div>
                         <div class="video-box">
-                            <iframe src="https://www.youtube.com/embed/zLRMBZT2rsU?si=vQtHGi-GYU2vNDTs" frameborder="0" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/zLRMBZT2rsU?si=vQtHGi-GYU2vNDTs" frameborder="0" allowfullscreen loading="lazy"></iframe>
                         </div>
                         <div class="video-caption">VIDEO: Field-Centric Drive Demo</div>
                     </div>
@@ -445,109 +489,9 @@
             </div>
         </section>
 
-        <section id="orbitron">
-            <div class="section-header">
-                <span class="section-num">03 //</span>
-                <h2 class="section-title">BATTLEBOTS: ORBITRON</h2>
-            </div>
-            
-            <div class="split-grid">
-                <div>
-                    <h3>Orbitron</h3>
-                    <div class="tag">DESIGN CONSULTANT</div>
-                    <p>
-                        In my freshman year, I jumped from educational robotics to the big leagues, joining the professional BattleBots team Orbitron. I contributed directly to the mechanical design of the V1 chassis and the weapon powertrain, and continue to be a design consultant to the team.
-                    </p>
-                    <p>
-                        Specific engineering challenges included weight optimization, thermal management for high-power BLDC motors and ESCs, and working with AR500 ballistic steel to create effective counter-weapon geometries.
-                    </p>
-                </div>
-                <div>
-                    <div class="video-box">
-                        <iframe src="https://www.youtube.com/embed/jj02HjxhIgU?si=nqqOsrMyZX1yNZ9K" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-caption">VIDEO: My Story Joining BattleBots Team Orbitron</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="dyno">
-            <div class="section-header">
-                <span class="section-num">04 //</span>
-                <h2 class="section-title">ACTUATOR DYNAMOMETER</h2>
-            </div>
-
-            <div class="split-grid">
-                <div>
-                    <h3>Research Study</h3>
-                    <div class="tag">INDEPENDENT STUDY, ONGOING</div>
-                    <p>
-                        While conducting independent research on novel actuators for humanoid robots, I realized I needed a way to validate my control theory. I developed a custom dynamometer test bench to characterize torque-speed curves, thermal performance, and control loop efficiency for any future actuator designs.
-                    </p>
-                    <p>
-                        Current progress includes the creation of the industrial electrical control system, which integrates a Teensy microcontroller and a 1000-watt industrial AC servo motor housed in a NEMA-rated control box. To join the chassis together, I CNC-machined custom motor and gearbox brackets on my 6040 mill. This video documents the design and build journey so far.
-                    </p>
-                </div>
-                <div>
-                    <div class="video-box">
-                        <iframe src="https://www.youtube.com/embed/2t5nEAW3VI8?si=NcwmHnAS_GvyCB1v" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-caption">VIDEO: Dyno test bench build and design process</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="audio">
-            <div class="section-header">
-                <span class="section-num">05 //</span>
-                <h2 class="section-title">AUDIO WORKS</h2>
-            </div>
-            
-            <div class="audio-container">
-                <div style="margin-bottom: 4rem;">
-                    <h3 style="margin-bottom: 0.5rem;">MUSIC PRODUCTION</h3>
-                    <p style="margin-bottom: 2rem;">
-                        I have been producing music for six years, starting in FL Studio and falling in love with the technical side of EDM. While I produce multiple genres, making drum and bass is my favorite. I treat audio with the same precision of my engineering projects, and I obsess over mix quality and sound design with the goal of creating the cleanest sonic profile possible. It is the ultimate outlet for my creativity. So you can get a idea of what I make, here are 2 tracks im proud of and am still iterating on.
-                    </p>
-                    
-                    <div class="audio-row">
-                        <div class="album-art">
-                            <img src="./assets/cover1.jpg" alt="art" onerror="this.src='./assets/lab1.jpg'"> 
-                        </div>
-                        <div class="audio-info">
-                            <span class="track-name">Sanctuary</span>
-                            <audio controls><source src="./assets/track1.mp3" type="audio/mpeg"></audio>
-                        </div>
-                    </div>
-
-                    <div class="audio-row">
-                        <div class="album-art">
-                             <img src="./assets/cover2.jpg" alt="art" onerror="this.src='./assets/lab1.jpg'">
-                        </div>
-                        <div class="audio-info">
-                            <span class="track-name">The Depths</span>
-                            <audio controls><source src="./assets/track2.mp3" type="audio/mpeg"></audio>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 style="margin-bottom: 1rem;">LIVE BATTLES</h3>
-                    <p>
-                        Beyond solo production, I compete in "Bish Battles," hosted by producer/streamer Bishu. Competitors have just two hours to create a completely original track in unpredictable BPMs and genres. I compete under the alias "Gradient." You can catch my submissions in his streams and videos!
-                    </p>
-                    <div class="btn-group">
-                        <a href="https://www.twitch.tv/welcome2bishu" target="_blank" class="social-btn twitch-btn">
-                            <span>👾</span> Watch on Twitch
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section id="visuals">
             <div class="section-header">
-                <span class="section-num">06 //</span>
+                <span class="section-num">05 //</span>
                 <h2 class="section-title">VISUAL WORKS</h2>
             </div>
 
@@ -560,14 +504,50 @@
                         </p>
                     </div>
                     <div class="gallery-grid">
-                        <div class="gallery-item" onclick="openLightbox(this, 'My FTC 2024 Robot')"><img src="./assets/render1.jpg"></div>
-                        <div class="gallery-item" onclick="openLightbox(this, 'My FTC 2024 Robot')"><img src="./assets/render2.jpg"></div>
-                        <div class="gallery-item" onclick="openLightbox(this, 'My Loonysquad Cad Comp robot')"><img src="./assets/render3.jpg"></div>
-                        <div class="gallery-item" onclick="openLightbox(this, 'My Loonysquad Cad Comp robot')"><img src="./assets/render4.jpg"></div>
-                        <div class="gallery-item" onclick="openLightbox(this, 'Orbitron robot render')"><img src="./assets/render5.jpg"></div>
-                        <div class="gallery-item" onclick="openLightbox(this, 'Orbitron robot render')"><img src="./assets/render6.jpg"></div>
-                        <div class="gallery-item" onclick="openLightbox(this, 'My FTC 2025 robot')"><img src="./assets/render7.jpg"></div>
-                        <div class="gallery-item" onclick="openLightbox(this, 'Old Swerve drive V2 render')"><img src="./assets/render8.jpg"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'My FTC 2024 Robot')"><img src="./assets/render1.jpg" loading="lazy" decoding="async"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'My FTC 2024 Robot')"><img src="./assets/render2.jpg" loading="lazy" decoding="async"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'My Loonysquad Cad Comp robot')"><img src="./assets/render3.jpg" loading="lazy" decoding="async"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'My Loonysquad Cad Comp robot')"><img src="./assets/render4.jpg" loading="lazy" decoding="async"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'Orbitron robot render')"><img src="./assets/render5.jpg" loading="lazy" decoding="async"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'Orbitron robot render')"><img src="./assets/render6.jpg" loading="lazy" decoding="async"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'My FTC 2025 robot')"><img src="./assets/render7.jpg" loading="lazy" decoding="async"></div>
+                        <div class="gallery-item" onclick="openLightbox(this, 'Old Swerve drive V2 render')"><img src="./assets/render8.jpg" loading="lazy" decoding="async"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="audio">
+            <div class="section-header">
+                <span class="section-num">06 //</span>
+                <h2 class="section-title">AUDIO WORKS</h2>
+            </div>
+            
+            <div class="audio-container">
+                <div style="margin-bottom: 4rem;">
+                    <h3 style="margin-bottom: 0.5rem;">MUSIC PRODUCTION</h3>
+                    <p style="margin-bottom: 2rem;">
+                        I have been producing music for six years, starting in FL Studio and falling in love with the technical side of EDM. While I produce multiple genres within EDM, making drum and bass is my favorite. I treat audio with the same precision of my engineering projects, and I obsess over mix quality and sound design with the goal of creating the cleanest sonic profile possible. Beyond solo production, I also compete in live music production competitions where we only have <em>2 hours</em> to create full tracks from scratch. It's invigorating, and production is the ultimate outlet for my creativity. So you can get an idea of what I make, here are 2 tracks I'm proud of and am still iterating on.
+                    </p>
+                    
+                    <div class="audio-row">
+                        <div class="album-art">
+                            <img src="./assets/cover1.jpg" alt="art" onerror="this.src='./assets/lab1.jpg'" loading="lazy"> 
+                        </div>
+                        <div class="audio-info">
+                            <span class="track-name">Sanctuary</span>
+                            <audio controls><source src="./assets/track1.wav" type="audio/wav"></audio>
+                        </div>
+                    </div>
+
+                    <div class="audio-row">
+                        <div class="album-art">
+                             <img src="./assets/cover2.jpg" alt="art" onerror="this.src='./assets/lab1.jpg'" loading="lazy">
+                        </div>
+                        <div class="audio-info">
+                            <span class="track-name">The Depths</span>
+                            <audio controls><source src="./assets/track2.wav" type="audio/wav"></audio>
+                        </div>
                     </div>
                 </div>
             </div>
